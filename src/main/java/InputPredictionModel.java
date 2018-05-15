@@ -4,27 +4,32 @@ import java.util.List;
 import java.util.Map;
 
 public class InputPredictionModel {
+    private static final int MAX_PREFIX_LETTERS = Integer.MAX_VALUE;
     private String text;
     private InputPredictionView view;
-    private ProbabilityLearner probabilityLearner;
+    private PredictionLearner predictionLearner;
 
     InputPredictionModel() {
         text = "";
-        probabilityLearner = new ProbabilityLearner("data/smsCorpus_en_2015.03.09_all.xml");
+        predictionLearner = new PredictionLearner("data/smsCorpus_en_2015.03.09_all.xml", MAX_PREFIX_LETTERS);
     }
 
-    List<Map.Entry<String, Double>> getPredictions() {
-        if (text.length() > 1 && text.endsWith(" ")) {
+    List<Map.Entry<String, Integer>> getPredictions() {
+        if (text.length() > 1 && text.endsWith(" ")) { // Succeeding word prediction
             String temp = text.substring(0, text.length() - 1);
             String lastWord = temp.contains(" ") ? temp.substring(temp.lastIndexOf(" ") + 1) : temp;
             lastWord = lastWord.toLowerCase();
-            return probabilityLearner.getDatabase().get(lastWord);
+            return predictionLearner.getDatabaseSucceeding().get(lastWord);
+        } else if (text.matches(".*[a-zA-Z]$")) { // word completion prediction
+            String lastWord = text.contains(" ") ? text.substring(text.lastIndexOf(" ") + 1) : text;
+            String prefix = lastWord.length() > MAX_PREFIX_LETTERS ? lastWord.substring(0,MAX_PREFIX_LETTERS) : lastWord;
+            prefix = prefix.toLowerCase();
+            return predictionLearner.getDatabaseCompletion().get(prefix);
         } else if (text.isEmpty()) {
-            return Arrays.asList(new AbstractMap.SimpleEntry<String, Double>("Hello", 0d));
+            return Arrays.asList(new AbstractMap.SimpleEntry<String, Integer>("Hello", 0));
         } else {
             return null;
         }
-
     }
 
     void appendText(String prediction) {

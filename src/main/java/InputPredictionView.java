@@ -34,9 +34,9 @@ public class InputPredictionView {
 
     void updatePredictions(){
         buttonPanel.removeAll();
-        List<Map.Entry<String, Double>> predictions = model.getPredictions();
+        List<Map.Entry<String, Integer>> predictions = model.getPredictions();
         if (predictions != null && !predictions.isEmpty())
-            for (Map.Entry<String, Double> p : predictions) {
+            for (Map.Entry<String, Integer> p : predictions) {
                 JButton btn = new JButton(p.getKey());
                 btn.addActionListener(controller);
                 buttonPanel.add(btn);
@@ -44,6 +44,7 @@ public class InputPredictionView {
         else
             buttonPanel.add(new JLabel("No predictions available..."));
         frame.revalidate();
+        frame.repaint();
     }
 
     public String getText(){

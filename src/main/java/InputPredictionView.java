@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
+import java.util.Map;
 
 public class InputPredictionView {
     private JFrame frame;
@@ -28,10 +29,10 @@ public class InputPredictionView {
     void update() {
         textInput.setText(model.getText());
         buttonPanel.removeAll();
-        List<String> predictions = model.getPredictions();
+        List<Map.Entry<String, Double>> predictions = model.getPredictions();
         if (predictions != null && !predictions.isEmpty())
-            for (String p : predictions) {
-                JButton btn = new JButton(p);
+            for (Map.Entry<String, Double> p : predictions) {
+                JButton btn = new JButton(p.getKey());
                 btn.addActionListener(controller);
                 buttonPanel.add(btn);
             }

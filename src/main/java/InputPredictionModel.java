@@ -1,16 +1,25 @@
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class InputPredictionModel {
     private String text;
     private InputPredictionView view;
+    private ProbabilityLearner probabilityLearner;
 
     InputPredictionModel() {
         text = "";
+        probabilityLearner = new ProbabilityLearner("");
     }
 
-    List<String> getPredictions() {
-        return Arrays.asList(new String[]{"Hello", "world", "Interactive", "Technologies"});
+    List<Map.Entry<String, Double>> getPredictions() {
+        if (text.length() > 1 && text.endsWith(" ")) {
+            String temp = text.substring(0, text.length() - 1);
+            String lastWord = temp.contains(" ") ? temp.substring(temp.lastIndexOf(" ") + 1) : temp;
+            lastWord = lastWord.toLowerCase();
+            return probabilityLearner.getDatabase().get(lastWord);
+        } else {
+            return Arrays.asList(new AbstractMap.SimpleEntry<String, Double>("Hello", 0d));
+        }
+
     }
 
     void appendText(String prediction) {

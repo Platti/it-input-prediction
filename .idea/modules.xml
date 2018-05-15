@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/it-input-prediction.iml" filepath="$PROJECT_DIR$/.idea/modules/it-input-prediction.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/it-input-prediction_main.iml" filepath="$PROJECT_DIR$/.idea/modules/it-input-prediction_main.iml" group="it-input-prediction" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/it-input-prediction_test.iml" filepath="$PROJECT_DIR$/.idea/modules/it-input-prediction_test.iml" group="it-input-prediction" />
+    </modules>
+  </component>
+</project>

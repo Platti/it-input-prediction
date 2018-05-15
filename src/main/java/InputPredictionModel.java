@@ -10,7 +10,7 @@ public class InputPredictionModel {
 
     InputPredictionModel() {
         text = "";
-        probabilityLearner = new ProbabilityLearner("");
+        probabilityLearner = new ProbabilityLearner("data/smsCorpus_en_2015.03.09_all.xml");
     }
 
     List<Map.Entry<String, Double>> getPredictions() {

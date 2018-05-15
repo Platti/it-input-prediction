@@ -22,6 +22,8 @@ public class ProbabilityLearner {
         addSucceedingWords("are", "the");
         addSucceedingWords("are", "the");
 
+
+
         finalizeDatabase();
     }
 

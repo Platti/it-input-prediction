@@ -1,10 +1,10 @@
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
-public class InputPredictionController implements ActionListener, KeyListener {
+public class InputPredictionController implements ActionListener, DocumentListener {
     private InputPredictionModel model;
     private InputPredictionView view;
 
@@ -14,17 +14,7 @@ public class InputPredictionController implements ActionListener, KeyListener {
     }
 
     @Override
-    public void keyTyped(KeyEvent e) {
-        model.setText(view.getText());
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
+    public void changedUpdate(DocumentEvent e) {
 
     }
 
@@ -34,5 +24,17 @@ public class InputPredictionController implements ActionListener, KeyListener {
 
     public void setView(InputPredictionView view) {
         this.view = view;
+    }
+
+    @Override
+    public void insertUpdate(DocumentEvent e) {
+        model.setText(view.getText());
+        view.updatePredictions();
+    }
+
+    @Override
+    public void removeUpdate(DocumentEvent e) {
+        model.setText(view.getText());
+        view.updatePredictions();
     }
 }

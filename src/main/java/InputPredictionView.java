@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +29,10 @@ public class InputPredictionView {
 
     void update() {
         textInput.setText(model.getText());
+        updatePredictions();
+    }
+
+    void updatePredictions(){
         buttonPanel.removeAll();
         List<Map.Entry<String, Double>> predictions = model.getPredictions();
         if (predictions != null && !predictions.isEmpty())
@@ -51,6 +56,6 @@ public class InputPredictionView {
 
     public void setController(InputPredictionController controller) {
         this.controller = controller;
-        textInput.addKeyListener(controller);
+        textInput.getDocument().addDocumentListener(controller);
     }
 }

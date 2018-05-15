@@ -1,4 +1,7 @@
-import java.util.*;
+import java.util.AbstractMap;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 public class InputPredictionModel {
     private String text;
@@ -16,8 +19,10 @@ public class InputPredictionModel {
             String lastWord = temp.contains(" ") ? temp.substring(temp.lastIndexOf(" ") + 1) : temp;
             lastWord = lastWord.toLowerCase();
             return probabilityLearner.getDatabase().get(lastWord);
-        } else {
+        } else if (text.isEmpty()) {
             return Arrays.asList(new AbstractMap.SimpleEntry<String, Double>("Hello", 0d));
+        } else {
+            return null;
         }
 
     }

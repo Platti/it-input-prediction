@@ -15,17 +15,18 @@ public class InputPredictionModel {
     }
 
     List<Map.Entry<String, Integer>> getPredictions() {
-        if (text.length() > 1 && text.endsWith(" ")) { // Succeeding word prediction
-            String temp = text.substring(0, text.length() - 1);
+        String line = text.contains("\n") ? text.substring(text.lastIndexOf("\n")+1, text.length()) : text;
+        if (line.length() > 1 && line.endsWith(" ")) { // Succeeding word prediction
+            String temp = line.substring(0, line.length() - 1);
             String lastWord = temp.contains(" ") ? temp.substring(temp.lastIndexOf(" ") + 1) : temp;
             lastWord = lastWord.toLowerCase();
             return predictionLearner.getDatabaseSucceeding().get(lastWord);
-        } else if (text.matches(".*[a-zA-Z]$")) { // word completion prediction
-            String lastWord = text.contains(" ") ? text.substring(text.lastIndexOf(" ") + 1) : text;
+        } else if (line.matches(".*[a-zA-Z]$")) { // word completion prediction
+            String lastWord = line.contains(" ") ? line.substring(line.lastIndexOf(" ") + 1) : line;
             String prefix = lastWord.length() > MAX_PREFIX_LETTERS ? lastWord.substring(0,MAX_PREFIX_LETTERS) : lastWord;
             prefix = prefix.toLowerCase();
             return predictionLearner.getDatabaseCompletion().get(prefix);
-        } else if (text.isEmpty()) {
+        } else if (line.isEmpty()) {
             return Arrays.asList(new AbstractMap.SimpleEntry<String, Integer>("Hello", 0));
         } else {
             return null;

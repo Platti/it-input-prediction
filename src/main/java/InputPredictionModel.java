@@ -15,7 +15,8 @@ public class InputPredictionModel {
     }
 
     List<Map.Entry<String, Integer>> getPredictions() {
-        String line = text.contains("\n") ? text.substring(text.lastIndexOf("\n")+1, text.length()) : text;
+        String line = text.contains("\n") ? text.substring(text.lastIndexOf("\n") + 1, text.length()) : text;
+        line = line.replaceAll("[^a-zA-ZäöüÄÖÜ ]", "");
         if (line.length() > 1 && line.endsWith(" ")) { // Succeeding word prediction
             String temp = line.substring(0, line.length() - 1);
             String lastWord = temp.contains(" ") ? temp.substring(temp.lastIndexOf(" ") + 1) : temp;
@@ -23,7 +24,7 @@ public class InputPredictionModel {
             return predictionLearner.getDatabaseSucceeding().get(lastWord);
         } else if (line.matches(".*[a-zA-Z]$")) { // word completion prediction
             String lastWord = line.contains(" ") ? line.substring(line.lastIndexOf(" ") + 1) : line;
-            String prefix = lastWord.length() > MAX_PREFIX_LETTERS ? lastWord.substring(0,MAX_PREFIX_LETTERS) : lastWord;
+            String prefix = lastWord.length() > MAX_PREFIX_LETTERS ? lastWord.substring(0, MAX_PREFIX_LETTERS) : lastWord;
             prefix = prefix.toLowerCase();
             return predictionLearner.getDatabaseCompletion().get(prefix);
         } else if (line.isEmpty()) {

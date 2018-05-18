@@ -57,7 +57,7 @@ public class PredictionLearner {
     }
 
     private void addTextMessage(String text) {
-        String[] words = text.replaceAll("[^a-zA-Z ]", "").toLowerCase().split("\\s+");
+        String[] words = text.replaceAll("[^a-zA-ZäöüÄÖÜ ]", "").toLowerCase().split("\\s+");
         for (int i = 0; i < words.length; i++) {
             addCompletionWord(words[i]);
             if (i > 0)

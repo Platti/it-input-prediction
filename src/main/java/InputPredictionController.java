@@ -9,13 +9,20 @@ public class InputPredictionController implements ActionListener, DocumentListen
     private InputPredictionView view;
 
     @Override
-    public void actionPerformed(ActionEvent e) {
-        model.appendText(((JButton) (e.getSource())).getText());
+    public void insertUpdate(DocumentEvent e) {
+        model.setText(view.getText());
+        view.updatePredictions();
     }
 
     @Override
-    public void changedUpdate(DocumentEvent e) {
+    public void removeUpdate(DocumentEvent e) {
+        model.setText(view.getText());
+        view.updatePredictions();
+    }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        model.appendText(((JButton) (e.getSource())).getText());
     }
 
     public void setModel(InputPredictionModel model) {
@@ -27,14 +34,7 @@ public class InputPredictionController implements ActionListener, DocumentListen
     }
 
     @Override
-    public void insertUpdate(DocumentEvent e) {
-        model.setText(view.getText());
-        view.updatePredictions();
-    }
+    public void changedUpdate(DocumentEvent e) {
 
-    @Override
-    public void removeUpdate(DocumentEvent e) {
-        model.setText(view.getText());
-        view.updatePredictions();
     }
 }
